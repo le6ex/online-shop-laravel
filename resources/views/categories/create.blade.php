@@ -1,10 +1,34 @@
-<h1>Create Category</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2>Create Category</h2>
+    </x-slot>
 
-<form method="POST" action="{{ route('categories.store') }}">
-    @csrf
+    <div class="py-6 max-w-xl mx-auto">
 
-    <input type="text" name="name" placeholder="Name">
-    <input type="text" name="slug" placeholder="Slug">
+        <form method="POST" action="{{ route('categories.store') }}" class="space-y-4">
+            @csrf
 
-    <button type="submit">Save</button>
-</form>
+            <div>
+                <input type="text" name="name" placeholder="Name"
+                       class="w-full border rounded p-2">
+                @error('name')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div>
+                <input type="text" name="slug" placeholder="Slug"
+                       class="w-full border rounded p-2">
+                @error('slug')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button class="bg-blue-500 text-white px-4 py-2 rounded">
+                Save
+            </button>
+
+        </form>
+
+    </div>
+</x-app-layout>

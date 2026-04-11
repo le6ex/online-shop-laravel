@@ -1,29 +1,59 @@
-<h1>Categories</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Categories
+        </h2>
+    </x-slot>
 
-<a href="{{ route('categories.create') }}">Create</a>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Slug</th>
-        <th>Actions</th>
-    </tr>
+            <a href="{{ route('categories.create') }}"
+               class="bg-blue-500 text-white px-4 py-2 rounded">
+                + Create Category
+            </a>
 
-    @foreach($categories as $category)
-        <tr>
-            <td>{{ $category->id }}</td>
-            <td>{{ $category->name }}</td>
-            <td>{{ $category->slug }}</td>
-            <td>
-                <a href="{{ route('categories.edit', $category) }}">Edit</a>
+            <div class="mt-4 bg-white shadow overflow-hidden rounded-lg">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="p-3 text-left">ID</th>
+                            <th class="p-3 text-left">Name</th>
+                            <th class="p-3 text-left">Slug</th>
+                            <th class="p-3 text-left">Actions</th>
+                        </tr>
+                    </thead>
 
-                <form action="{{ route('categories.destroy', $category) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-    @endforeach
-</table>
+                    <tbody>
+                        @foreach($categories as $category)
+                            <tr class="border-b">
+                                <td class="p-3">{{ $category->id }}</td>
+                                <td class="p-3">{{ $category->name }}</td>
+                                <td class="p-3">{{ $category->slug }}</td>
+                                <td class="p-3 flex gap-2">
+
+                                    <a href="{{ route('categories.edit', $category) }}"
+                                       class="bg-yellow-400 px-3 py-1 rounded">
+                                        Edit
+                                    </a>
+
+                                    <form method="POST"
+                                          action="{{ route('categories.destroy', $category) }}">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="bg-red-500 text-white px-3 py-1 rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</x-app-layout>
