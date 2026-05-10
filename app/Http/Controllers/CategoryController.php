@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
+use App\Services\Category\Service;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    public function __construct(private Service $service)
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories  = Category::all();
+        $categories = Category::all();
 
         return view('categories.index', compact('categories'));
     }
@@ -29,17 +36,13 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $request -> validate
-        ([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:categories,slug'
-        ]);
+        $this->service->create($request->validated());
 
-        Category::create($request->all());
+        return redirect()->route('categories.index');
 
-        return redirect() -> route('categories.index');
+
     }
 
     /**
@@ -61,17 +64,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateRequest $request, Category $category )
     {
-        $request -> validate
-        ([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:categories,slug'
-        ]);
+        $this->service->update($category, $request->validated());
 
-        $category -> update ($request -> all());
-
-        return redirect() -> route('categories.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -79,8 +76,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category -> delete();
+        $this->service->delete($category);
 
-        return redirect() -> route('categories.index');
+        return redirect()->route('categories.index');
     }
 }

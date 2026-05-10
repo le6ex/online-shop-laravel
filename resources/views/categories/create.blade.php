@@ -16,15 +16,7 @@
                 @enderror
             </div>
 
-            <div>
-                <input type="text" name="slug" placeholder="Slug"
-                       class="w-full border rounded p-2">
-                @error('slug')
-                    <div class="text-red-500">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <button class="bg-blue-500 text-white px-4 py-2 rounded">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
                 Save
             </button>
 

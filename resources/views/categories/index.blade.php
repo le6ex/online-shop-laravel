@@ -32,20 +32,7 @@
                                 <td class="p-3">{{ $category->slug }}</td>
                                 <td class="p-3 flex gap-2">
 
-                                    <a href="{{ route('categories.edit', $category) }}"
-                                       class="bg-yellow-400 px-3 py-1 rounded">
-                                        Edit
-                                    </a>
 
-                                    <form method="POST"
-                                          action="{{ route('categories.destroy', $category) }}">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button class="bg-red-500 text-white px-3 py-1 rounded">
-                                            Delete
-                                        </button>
-                                    </form>
 
                                 </td>
                             </tr>
